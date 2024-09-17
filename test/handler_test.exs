@@ -10,17 +10,18 @@ defmodule K8STrafficDrainHandlerTest do
 
     refute @handler.draining?()
 
-    {time, _} = :timer.tc(fn ->
-      :gen_event.notify(:erl_signal_server, :sigterm)
-      assert_receive :draining
-      refute_received {:stopping, _}
-      assert @handler.draining?(), "expected draining to have started"
+    {time, _} =
+      :timer.tc(fn ->
+        :gen_event.notify(:erl_signal_server, :sigterm)
+        assert_receive :draining
+        refute_received {:stopping, _}
+        assert @handler.draining?(), "expected draining to have started"
 
-      assert_receive {:stopping, state}, delay * 2
-      assert  {_, ^delay, _} = state
-    end)
+        assert_receive {:stopping, state}, delay * 2
+        assert {_, ^delay, _} = state
+      end)
 
     assert time >= delay * 1000, "expected stop after delay time"
-    assert time < ((delay + 100) * 1000), "expected stopping message within 100ms of delay time"
+    assert time < (delay + 100) * 1000, "expected stopping message within 100ms of delay time"
   end
 end

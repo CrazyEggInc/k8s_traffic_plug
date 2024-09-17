@@ -58,7 +58,7 @@ defmodule FT.K8S.TrafficDrainHandler do
 
   """
   def start_link(opts) do
-    Logger.debug(fn -> "#{__MODULE__} start_link #{inspect opts}" end)
+    Logger.debug(fn -> "#{__MODULE__} start_link #{inspect(opts)}" end)
     delay = Keyword.get(opts, :shutdown_delay_ms, 20_000)
     test_mode = Keyword.get(opts, :test_mode, false)
 
@@ -86,5 +86,4 @@ defmodule FT.K8S.TrafficDrainHandler do
   def start_draining do
     :gen_event.notify(:erl_signal_server, :sigterm)
   end
-
 end

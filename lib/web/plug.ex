@@ -51,6 +51,7 @@ defmodule FT.K8S.TrafficDrainPlug do
         |> put_resp_content_type("text/plain")
         |> send_resp(500, "Draining")
         |> halt
+
       false ->
         conn
         |> put_resp_content_type("text/plain")
@@ -61,5 +62,4 @@ defmodule FT.K8S.TrafficDrainPlug do
 
   @impl true
   def call(conn, _config), do: conn
-
 end

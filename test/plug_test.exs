@@ -39,5 +39,4 @@ defmodule K8STrafficDrainPlugTest do
     assert conn.status == nil
     refute conn.halted
   end
-
 end
